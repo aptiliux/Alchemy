@@ -50,7 +50,7 @@ public class AlcColourIO implements AlcConstants{
     public ColourLovers clc = new ColourLovers();
 
     AlcColourIO(){
-        colours = new ArrayList<Color>();      
+        colours = new ArrayList<>();      
         errorType = 0;
         errorText = null;    
         clc.setupDialog();
@@ -757,26 +757,25 @@ public class AlcColourIO implements AlcConstants{
     ///////////////////////////////////////////////////////////////////////
     
     private void writeASE(File file) {
-            String NUL = new Character((char) 0).toString();
-            String SOH = new Character((char) 1).toString();
+            String NUL = String.valueOf((char) 0);
+            String SOH = String.valueOf((char) 1);
             String colorName=null;
 
             int countColors = Alchemy.canvas.swatch.size();
 
             String ase = "ASEF" + NUL + SOH + NUL + NUL;
             for (int i = 24; i >= 0; i -= 8) {
-                    ase += new Character((char) ((countColors >> i) & 0xFF)).toString();
+                    ase += String.valueOf((char) ((countColors >> i) & 0xFF));
             }
             ase += NUL;
 
             for (int i = 0; i < Alchemy.canvas.swatch.size(); i++) {
                     colorName= getSwatchHexString(i);
                     ase += SOH + NUL + NUL + NUL;
-                    ase += new Character(
+                    ase += String.valueOf(
                                     (char) ((((colorName.length() + 1) * 2) + 20)))
-                                    .toString()
                                     + NUL;
-                    ase += new Character((char) (colorName.length() + 1)).toString()
+                    ase += String.valueOf((char) (colorName.length() + 1))
                                     + NUL;
 
                     for (int j = 0; j < colorName.length(); j++) {
@@ -1193,7 +1192,7 @@ public class AlcColourIO implements AlcConstants{
                       modAmounts[n]=false;
                    }
                    modDirection[n] = direction[n].getSelectedIndex();
-                   modPercents[n] = ((Integer)percent[n].getValue()).floatValue();
+                   modPercents[n] = ((Number)percent[n].getValue()).floatValue();
                    if (modPercents[n]>100){
                        modPercents[n]=100;
                    }else if(modPercents[n]<=0){

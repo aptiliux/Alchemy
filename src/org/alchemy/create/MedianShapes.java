@@ -34,8 +34,8 @@ public class MedianShapes extends AlcModule {
     /** Capture a gesture or not */
     private boolean captureControlGesture = true;
     /** Array list to store the points of the control shape */
-    private ArrayList<Point> controlShapePoints = new ArrayList<Point>(1000);
-    private ArrayList<Point> controlShapePointsBuffer = new ArrayList<Point>(1000);
+    private ArrayList<Point> controlShapePoints = new ArrayList<>(1000);
+    private ArrayList<Point> controlShapePointsBuffer = new ArrayList<>(1000);
     /** Origin Point - when redrawing, where the mouse starts from */
     Point originPoint;
     /** Origin Difference - when redrawing, how far between the origin of the current shape 
@@ -145,7 +145,7 @@ public class MedianShapes extends AlcModule {
 
             } else {
                 controlShapePoints = controlShapePointsBuffer;
-                controlShapePointsBuffer = new ArrayList<Point>(1000);
+                controlShapePointsBuffer = new ArrayList<>(1000);
                 //canvas.getCurrentShape().addLastPoint(p);
 
 

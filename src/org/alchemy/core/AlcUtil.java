@@ -340,7 +340,7 @@ public class AlcUtil implements AlcConstants {
      * @return  An array of AlcShapes or null if no shapes found
      */
     public static AlcShape[] getShapes() {
-        ArrayList<AlcShape> shapes = new ArrayList<AlcShape>();
+        ArrayList<AlcShape> shapes = new ArrayList<>();
 
         // Folder of the plugins
         File shapesDir = new File("shapes");
@@ -358,8 +358,8 @@ public class AlcUtil implements AlcConstants {
         // Get the list of PDF files
         File[] pdfs = listFilesAsArray(shapesDir, pdfFilter, true);
         // For each pdf add the shapes to the array list
-        for (int i = 0; i < pdfs.length; i++) {
-            shapes.addAll(getPDFShapes(pdfs[i], true, 0));
+        for (File pdf : pdfs) {
+            shapes.addAll(getPDFShapes(pdf, true, 0));
         }
         if (shapes.size() > 0) {
             AlcShape[] arr = new AlcShape[shapes.size()];
@@ -448,7 +448,7 @@ public class AlcUtil implements AlcConstants {
         }
 
         // Create an arraylist to populate with just the shapes
-        ArrayList<AlcShape> shapeList = new ArrayList<AlcShape>(totalPages * 10);
+        ArrayList<AlcShape> shapeList = new ArrayList<>(totalPages * 10);
 
         // Go through each of the pages
         for (int p = 0; p < totalPages; p++) {
@@ -586,7 +586,7 @@ public class AlcUtil implements AlcConstants {
 
     private static Collection<File> listFiles(File directory, FilenameFilter filter, boolean recurse) {
         // List of files / directories
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<File> files = new ArrayList<>();
 
         // Get files / directories in the directory
         File[] entries = directory.listFiles();
@@ -650,8 +650,8 @@ public class AlcUtil implements AlcConstants {
         Rectangle windowBounds = null;
 
         if (devices.length > 1) {
-            for (int i = 0; i < devices.length; i++) {
-                Rectangle screenBounds = devices[i].getDefaultConfiguration().getBounds();
+            for (GraphicsDevice device : devices) {
+                Rectangle screenBounds = device.getDefaultConfiguration().getBounds();
                 if (screenBounds.contains(parentBounds.x + parentBounds.width/2, parentBounds.y + parentBounds.height/2)) {
                     windowBounds = screenBounds;
                 }

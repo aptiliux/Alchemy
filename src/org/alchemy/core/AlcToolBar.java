@@ -791,14 +791,10 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
         int createCount = 0;
 
         // Populate the Popup Menu
-        for (int i = 0; i < Alchemy.plugins.creates.length; i++) {
-
+        for (AlcModule currentModule : Alchemy.plugins.creates) {
             // The current module
-            AlcModule currentModule = Alchemy.plugins.creates[i];
-
             // Check if this module should be loaded
             if (loadModule(currentModule)) {
-
                 final AlcRadioButtonMenuItem createMenuItem = new AlcRadioButtonMenuItem();
 
                 AbstractAction createMenuItemAction = new AbstractAction() {
@@ -810,8 +806,8 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
                             removeSubToolBarSection(0);
                             Alchemy.plugins.setCurrentCreate(createMenuItem.getIndex());
                         }
-
-
+                        
+                        
                         // When triggered by a key toggle the check box
                         if (!e.getSource().getClass().getName().endsWith("AlcRadioButtonMenuItem")) {
                             createMenuItem.setSelected(!createMenuItem.isSelected());
@@ -839,12 +835,12 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
                 // The first 9 modules are mapped to keys 1 - 9
                 if (createCount < 9) {
                     Alchemy.shortcuts.setShortcut(createMenuItem, zero + createCount + 1, currentModule.getName(), createMenuItemAction);
-
-                // The 10th module is mapped to the 0 key
+                    
+                    // The 10th module is mapped to the 0 key
                 } else if (createCount == 9) {
                     Alchemy.shortcuts.setShortcut(createMenuItem, zero, currentModule.getName(), createMenuItemAction);
-
-                // The next 9 modules are mapped to keys 1 - 9 with the ALT key
+                    
+                    // The next 9 modules are mapped to keys 1 - 9 with the ALT key
                 } else if (createCount > 9) {
                     Alchemy.shortcuts.setShortcut(createMenuItem, zero + (createCount - 9), currentModule.getName(), createMenuItemAction, KeyEvent.ALT_MASK);
                 }
@@ -864,13 +860,10 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
             int affectCount = 0;
 
 
-            for (int i = 0; i < Alchemy.plugins.affects.length; i++) {
+            for (AlcModule currentModule : Alchemy.plugins.affects) {
                 // The current module
-                AlcModule currentModule = Alchemy.plugins.affects[i];
-
                 // To load or not
                 boolean load = loadModule(currentModule);
-
                 if (load) {
                     final AlcCheckBoxMenuItem affectMenuItem = new AlcCheckBoxMenuItem();
 
@@ -885,8 +878,8 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
                             // SELECTED
                             if (affectMenuItem.isSelected()) {
                                 Alchemy.plugins.addAffect(affectMenuItem.getIndex());
-
-                            // DESELECTED
+                                
+                                // DESELECTED
                             } else {
                                 Alchemy.plugins.removeAffect(affectMenuItem.getIndex());
                                 // Index is offset to allow for the create module to always be first
@@ -909,10 +902,10 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
                     // Range from 0 - 8 mapped to keys 1 - 9
                     if (affectCount < 9) {
                         Alchemy.shortcuts.setShortcut(affectMenuItem, zero + affectCount + 1, currentModule.getName(), affectMenuItemAction, KEY_MODIFIER);
-                    // The 10th module is mapped to the 0 key
+                        // The 10th module is mapped to the 0 key
                     } else if (affectCount == 9) {
                         Alchemy.shortcuts.setShortcut(affectMenuItem, zero, currentModule.getName(), affectMenuItemAction, KEY_MODIFIER);
-                    // The next 9 modules are mapped to keys 1 - 9 with the SHIFT key
+                        // The next 9 modules are mapped to keys 1 - 9 with the SHIFT key
                     } else if (affectCount > 9) {
                         Alchemy.shortcuts.setShortcut(affectMenuItem, zero + (affectCount - 9), currentModule.getName(), affectMenuItemAction, KeyEvent.SHIFT_MASK);
                     }
@@ -1256,16 +1249,14 @@ public class AlcToolBar extends AlcAbstractToolBar implements AlcConstants{
             subToolBar.add(createSubToolBarSection.panel);
         }
         // Add the affect sections
-        for (int i = 0; i < affectSubToolBarSections.length; i++) {
-
-            if (affectSubToolBarSections[i] != null) {
-
+        for (AlcToolBarSubSection affectSubToolBarSection : affectSubToolBarSections) {
+            if (affectSubToolBarSection != null) {
                 // If there is odd number of components then add a separator
                 if ((subToolBar.getComponentCount() % 2) != 0) {
                     subToolBar.add(new AlcSubSeparator());
                 }
                 // Then add the section
-                subToolBar.add(affectSubToolBarSections[i].panel);
+                subToolBar.add(affectSubToolBarSection.panel);
             }
         }
 

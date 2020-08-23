@@ -309,7 +309,7 @@ public class TypeShapes extends AlcModule implements AlcConstants {
                     try {
                         mainArea = new Area(union);
                         mainArea.add(newArea);
-                        union = new GeneralPath((Shape) mainArea);
+                        union = new GeneralPath(mainArea);
 
                     } finally {
                         mainArea = null;
@@ -328,7 +328,7 @@ public class TypeShapes extends AlcModule implements AlcConstants {
         union = (GeneralPath) union.createTransformedShape(centre);
 
         // Convert the random shape into a general path
-        GeneralPath gp = new GeneralPath((Shape) union);
+        GeneralPath gp = new GeneralPath(union);
         //AlcShape alcShape = new AlcShape(gp, SOLID);
         return gp;
     }

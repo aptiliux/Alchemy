@@ -300,10 +300,10 @@ public class AlcShape implements AlcConstants, Cloneable, Serializable {
     public void spineTo(Point2D.Float p, float width) {
         this.penShape = true;
         if (spine == null) {
-            spine = new ArrayList<Point2D.Float>(1000);
+            spine = new ArrayList<>(1000);
         }
         if (spineWidth == null) {
-            spineWidth = new ArrayList<Float>(1000);
+            spineWidth = new ArrayList<>(1000);
         }
 
         // Check that the pen location has changed
@@ -336,7 +336,7 @@ public class AlcShape implements AlcConstants, Cloneable, Serializable {
             for (int i = 1; i < spine.size(); i++) {
                 Point2D.Float p2 = spine.get(i - 1);
                 Point2D.Float p1 = spine.get(i);
-                float level = (spineWidth.get(i)).floatValue();
+                float level = (spineWidth.get(i));
                 Point2D.Float pOut = rightAngle(p1, p2, level);
                 curveTo(pOut);
             }
@@ -345,7 +345,7 @@ public class AlcShape implements AlcConstants, Cloneable, Serializable {
                 int index = (spine.size() - j);
                 Point2D.Float p2 = spine.get(index);
                 Point2D.Float p1 = spine.get(index - 1);
-                float level = (spineWidth.get(index)).floatValue();
+                float level = (spineWidth.get(index));
                 Point2D.Float pIn = rightAngle(p1, p2, level);
                 curveTo(pIn);
             }
@@ -728,7 +728,7 @@ public class AlcShape implements AlcConstants, Cloneable, Serializable {
         PathIterator pathIterator = path.getPathIterator(null);
         float[] points = new float[6];
         int allocate = (totalPoints > 0) ? totalPoints : 1000;
-        ArrayList<Point2D.Float> list = new ArrayList<Point2D.Float>(allocate);
+        ArrayList<Point2D.Float> list = new ArrayList<>(allocate);
 
         while (!pathIterator.isDone()) {
 

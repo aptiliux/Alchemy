@@ -201,7 +201,7 @@ public class AlcSimpleToolBar extends AlcAbstractToolBar implements AlcConstants
         addModules(Alchemy.plugins.creates);
         this.add(separator);
         addModules(Alchemy.plugins.affects);
-        this.add((ColorBox) separator.clone());
+        this.add((Component) separator.clone());
 
 
         //////////////////////////////////////////////////////////////
@@ -231,8 +231,7 @@ public class AlcSimpleToolBar extends AlcAbstractToolBar implements AlcConstants
 
         ButtonGroup buttonGroup = new ButtonGroup();
         int count = 0;
-        for (int i = 0; i < modules.length; i++) {
-            AlcModule currentModule = modules[i];
+        for (AlcModule currentModule : modules) {
             if (loadModule(currentModule)) {
                 addModuleButton(currentModule, buttonGroup, count);
                 count++;

@@ -136,8 +136,8 @@ public class AlcWindow extends JFrame implements AlcConstants, WindowStateListen
         // LAYERED PANE
         JLayeredPane layeredPane = new JLayeredPane();
         // Add the UI on top of the canvas
-        layeredPane.add(Alchemy.canvas, new Integer(1));
-        layeredPane.add(Alchemy.toolBar, new Integer(2));
+        layeredPane.add(Alchemy.canvas, Integer.valueOf(1));
+        layeredPane.add(Alchemy.toolBar, Integer.valueOf(2));
 
         // FRAME
         layeredPane.setPreferredSize(windowSize);
@@ -426,8 +426,8 @@ public class AlcWindow extends JFrame implements AlcConstants, WindowStateListen
     private boolean checkOnscreen(Point location) {
         boolean onscreen = false;
         GraphicsDevice[] devices = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
-        for (int i = 0; i < devices.length; i++) {
-            Rectangle screenBounds = devices[i].getDefaultConfiguration().getBounds();
+        for (GraphicsDevice device : devices) {
+            Rectangle screenBounds = device.getDefaultConfiguration().getBounds();
             if (screenBounds.contains(location)) {
                 onscreen = true;
 

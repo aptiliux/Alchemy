@@ -137,8 +137,8 @@ public class TraceShapes extends AlcModule implements AlcConstants {
         imageSize = canvas.getVisibleRect();
 
         double scale;
-        double widthScale = (float) imageSize.width / (float) newImage.getWidth();
-        double heightScale = (float) imageSize.height / (float) newImage.getHeight();
+        double widthScale = imageSize.width / (float) newImage.getWidth();
+        double heightScale = imageSize.height / (float) newImage.getHeight();
 
         // Use the smaller scale
         if (widthScale < heightScale) {
@@ -401,7 +401,7 @@ class TraceShapesFlickr {
     private List elementsWithTag(Document doc, String tag) {
         NodeList nodes = doc.getElementsByTagName(tag);
         if ((nodes != null) && (nodes.getLength() > 0)) {
-            ArrayList<Element> elements = new ArrayList<Element>(nodes.getLength());
+            ArrayList<Element> elements = new ArrayList<>(nodes.getLength());
             for (int i = 0; i < nodes.getLength(); i++) {
                 elements.add((Element) nodes.item(i));
             }

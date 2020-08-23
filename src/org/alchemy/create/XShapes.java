@@ -36,7 +36,7 @@ public class XShapes extends AlcModule implements AlcConstants {
     private int multiplier = 25;
     private AlcToolBarSubSection subToolBarSection;
 //    private boolean freeform = true;
-    private ArrayList<Integer> averageSpeed = new ArrayList<Integer>();
+    private ArrayList<Integer> averageSpeed = new ArrayList<>();
     private int counter = 0;
 
     public XShapes() {
@@ -139,7 +139,7 @@ public class XShapes extends AlcModule implements AlcConstants {
 
         int speed = diffX + diffY;
         int thisSlot = counter % 10;
-        averageSpeed.add(thisSlot, new Integer(speed));
+        averageSpeed.add(thisSlot, speed);
 
         counter++;
 
@@ -152,7 +152,7 @@ public class XShapes extends AlcModule implements AlcConstants {
         int sum = 0;  // sum of all the elements
         for (int i = 0; i < list.size(); i++) {
             Integer thisInteger = list.get(i);
-            sum += thisInteger.intValue();
+            sum += thisInteger;
         }
         return sum / list.size();
     }

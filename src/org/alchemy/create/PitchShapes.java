@@ -42,10 +42,9 @@ public class PitchShapes extends AlcModule implements AlcConstants {
             // take the weighted average of all pitch parts
             float weightedSum = 0;
             float energySum = 0;
-            for (int i = 0; i < f.length; i++) {
-                weightedSum += f[i][0] * f[i][1];
-                energySum += f[i][1];
-
+            for (float[] f1 : f) {
+                weightedSum += f1[0] * f1[1];
+                energySum += f1[1];
                 //if (f[i][1] > 1000)
                 //	System.out.printf("%.0f %.2f, ", f[i][0], f[i][1]);
             }

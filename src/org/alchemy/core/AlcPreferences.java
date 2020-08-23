@@ -339,8 +339,7 @@ class AlcPreferences implements AlcConstants {
 
     /** Reset the module preferences to defaults */
     private void resetModules(AlcModule[] modules) {
-        for (int i = 0; i < modules.length; i++) {
-            AlcModule currentModule = modules[i];
+        for (AlcModule currentModule : modules) {
             String moduleName = currentModule.getName();
             final String moduleNodeName = modulePrefix + moduleName;
             prefs.putBoolean(moduleNodeName, true);
@@ -999,9 +998,9 @@ class AlcPreferences implements AlcConstants {
             "yyyy.MM.dd 'at' HH.mm.ss"
         };
         String dates = "<html>" + Alchemy.bundle.getString("example") + ":<br>";
-        for (int i = 0; i < dateFormats.length; i++) {
-            SimpleDateFormat formatter = new SimpleDateFormat(dateFormats[i], LOCALE);
-            dates += dateFormats[i];
+        for (String dateFormat : dateFormats) {
+            SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, LOCALE);
+            dates += dateFormat;
             dates += " : ";
             dates += "<font color=#333333>" + formatter.format(today) + "</font>";
             dates += "<br>";
@@ -1012,8 +1011,7 @@ class AlcPreferences implements AlcConstants {
 
     private void setupModules(AlcModule[] modules, JPanel panel) {
 
-        for (int i = 0; i < modules.length; i++) {
-            AlcModule currentModule = modules[i];
+        for (AlcModule currentModule : modules) {
             String moduleName = currentModule.getName();
             final String moduleNodeName = modulePrefix + moduleName;
             final JCheckBox checkBox = new JCheckBox(moduleName);
@@ -1027,7 +1025,7 @@ class AlcPreferences implements AlcConstants {
 
                 public void actionPerformed(ActionEvent e) {
                     changeModules = true;
-                //prefs.putBoolean(moduleNodeName, checkBox.isSelected());
+                    //prefs.putBoolean(moduleNodeName, checkBox.isSelected());
                 }
             });
 
@@ -1071,8 +1069,8 @@ class AlcPreferences implements AlcConstants {
     private static Point stringToPoint(String string) {
         if (string != null) {
             String[] splitString = string.split(",", 2);
-            int x = new Integer(splitString[0]).intValue();
-            int y = new Integer(splitString[1]).intValue();
+            int x = Integer.valueOf(splitString[0]);
+            int y = Integer.valueOf(splitString[1]);
             Point point = new Point(x, y);
             //System.out.println(point);
             return point;
@@ -1107,8 +1105,8 @@ class AlcPreferences implements AlcConstants {
     private static Dimension stringToDimension(String string) {
         if (string != null) {
             String[] splitString = string.split(",", 2);
-            int width = new Integer(splitString[0]).intValue();
-            int height = new Integer(splitString[1]).intValue();
+            int width = Integer.valueOf(splitString[0]);
+            int height = Integer.valueOf(splitString[1]);
             Dimension dimension = new Dimension(width, height);
             return dimension;
         } else {

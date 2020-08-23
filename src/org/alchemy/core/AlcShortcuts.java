@@ -46,8 +46,8 @@ class AlcShortcuts extends JDialog implements AlcConstants {
 
     AlcShortcuts(AlcWindow owner) {
         super(owner, Alchemy.bundle.getString("keyboardShortcutsWindowTitle"), true);
-        userShortcuts = new ArrayList<AlcShortcutMapper>(50);
-        defaultShortcuts = new ArrayList<AlcShortcutMapper>(50);
+        userShortcuts = new ArrayList<>(50);
+        defaultShortcuts = new ArrayList<>(50);
         this.setPreferredSize(new Dimension(400, 300));
     }
 
@@ -85,7 +85,7 @@ class AlcShortcuts extends JDialog implements AlcConstants {
                 new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
-                        userShortcuts = new ArrayList<AlcShortcutMapper>(defaultShortcuts);
+                        userShortcuts = new ArrayList<>(defaultShortcuts);
                         reloadShortcuts();
                         refreshTextfields();
                         okButton.requestFocus();

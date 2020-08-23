@@ -37,6 +37,7 @@ import java.io.*;
 
 // PDF READER
 import com.sun.pdfview.*;
+import java.awt.image.RenderedImage;
 
 // JPEN
 import jpen.*;
@@ -179,7 +180,7 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
     
     /** Creates a new instance of AlcCanvas*/
     AlcCanvas() {
-        currentColorSet = new ArrayList<Color>(2);
+        currentColorSet = new ArrayList<>(2);
         currentColorSet.add(Color.WHITE);
         currentColorSet.add(Color.WHITE);
         currentColorIndex = 0;
@@ -192,20 +193,20 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
         this.undoDepth = Alchemy.preferences.undoDepth;
         
         /** Holds saved swatch colors */
-        swatch = new ArrayList<Color>();
+        swatch = new ArrayList<>();
         /** Keeps track of which swatch color is active */
         activeSwatchIndex = -1;
 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
 
-        shapes = new ArrayList<AlcShape>(100);
+        shapes = new ArrayList<>(100);
         shapes.ensureCapacity(100);
-        createShapes = new ArrayList<AlcShape>(25);
+        createShapes = new ArrayList<>(25);
         createShapes.ensureCapacity(25);
-        affectShapes = new ArrayList<AlcShape>(25);
+        affectShapes = new ArrayList<>(25);
         affectShapes.ensureCapacity(25);
-        guideShapes = new ArrayList<AlcShape>(25);
+        guideShapes = new ArrayList<>(25);
         guideShapes.ensureCapacity(25);
 
         fullShapeList[0] = shapes;
@@ -214,8 +215,8 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
         
         /** Keeps track of which shapes in "shapes" array were laid down
          *  in a single mouse/pen click                                   */
-        shapeGroups = new ArrayList<Integer>();
-        shapeGroupsSize = new ArrayList<Integer>();
+        shapeGroups = new ArrayList<>();
+        shapeGroupsSize = new ArrayList<>();
         
         activeShapeList[0] = createShapes;
         activeShapeList[1] = affectShapes;
@@ -274,16 +275,16 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
         }
         if (redraw) {
             // Draw the create, affect, and guide lists
-            for (int j = 0; j < activeShapeList.length; j++) {
-                for (int i = 0; i < activeShapeList[j].size(); i++) {
-                    AlcShape currentShape = (AlcShape) activeShapeList[j].get(i);
+            for (ArrayList activeShapeList1 : activeShapeList) {
+                for (int i = 0; i < activeShapeList1.size(); i++) {
+                    AlcShape currentShape = (AlcShape) activeShapeList1.get(i);
                     // LINE
                     if (currentShape.style == STYLE_STROKE) {
                         //g2.setStroke(new BasicStroke(currentShape.lineWidth, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL));
                         g2.setStroke(new BasicStroke(currentShape.lineWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
                         g2.setPaint(currentShape.getPaint());
                         g2.draw(currentShape.path);
-                    // SOLID
+                        // SOLID
                     } else {
                         g2.setPaint(currentShape.getPaint());
                         g2.fill(currentShape.path);
@@ -690,7 +691,7 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
      * @return              The normailzed array list of shapes
      */
     public ArrayList<AlcShape> normailzeShapes(ArrayList<AlcShape> inputShapes, int size){
-        ArrayList<AlcShape> outputShapes = new ArrayList<AlcShape>(inputShapes.size());
+        ArrayList<AlcShape> outputShapes = new ArrayList<>(inputShapes.size());
 
         for (AlcShape shape : inputShapes) {
 
@@ -1510,7 +1511,7 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
             setGuide(false);
             Image bitmapImage = renderCanvas(true, transparent);
             setGuide(true);
-            ImageIO.write((BufferedImage) bitmapImage, format, file);
+            ImageIO.write((RenderedImage) bitmapImage, format, file);
             return true;
         } catch (IOException ex) {
             System.err.println(ex);
@@ -1896,11 +1897,10 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
 
 
             // Draw the shapes, create, and affect lists
-            for (int j = 0; j < Alchemy.canvas.fullShapeList.length; j++) {
-                for (int i = 0; i < Alchemy.canvas.fullShapeList[j].size(); i++) {
-                    AlcShape currentShape = (AlcShape) Alchemy.canvas.fullShapeList[j].get(i);
+            for (ArrayList fullShapeList1 : Alchemy.canvas.fullShapeList) {
+                for (int i = 0; i < fullShapeList1.size(); i++) {
+                    AlcShape currentShape = (AlcShape) fullShapeList1.get(i);
                     Paint paint = currentShape.getPaint();
-                    
                     // LINE
                     if (currentShape.style == STYLE_STROKE) {
                         //g2.setStroke(new BasicStroke(currentShape.lineWidth, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL));
@@ -1913,8 +1913,8 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
                             g2.setPaint(paint);
                             g2.draw(currentShape.path);
                         }
-
-                    // SOLID
+                        
+                        // SOLID
                     } else {
 
                         // If this shape is a gradient and we are making a PDF
@@ -1924,8 +1924,8 @@ public class AlcCanvas extends JPanel implements AlcConstants, MouseListener, Mo
                             g2.setPaint(paint);
                             g2.fill(currentShape.path);
                         }
-
-
+                        
+                        
                     }
                 }
             }

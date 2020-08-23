@@ -86,9 +86,9 @@ class AlcExportDialog extends JDialog implements AlcConstants {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int width = new Integer(widthField.getText());
-                    int height = new Integer(heightField.getText());
-                    float scale = new Float(percentField.getText()) /  100f;
+                    int width = Integer.valueOf(widthField.getText());
+                    int height = Integer.valueOf(heightField.getText());
+                    float scale = Float.valueOf(percentField.getText()) /  100f;
                     boolean transparency = transparencyCheckBox.isSelected();
 
 //                    System.out.println("Width: " + width + " Height: " + height);
@@ -144,10 +144,10 @@ class AlcExportDialog extends JDialog implements AlcConstants {
         this.file = file;
         java.awt.Rectangle canvasSize = Alchemy.canvas.getVisibleRect();
         startWidth = canvasSize.width;
-        widthField.setValue(new Integer(startWidth));
+        widthField.setValue(startWidth);
         startHeight = canvasSize.height;
-        heightField.setValue(new Integer(startHeight));
-        percentField.setValue(new Integer(100));
+        heightField.setValue(startHeight);
+        percentField.setValue(100);
 
         if(imageFormat.equals("PNG")){
             transparencyCheckBox.setEnabled(true);
@@ -181,7 +181,7 @@ class AlcExportDialog extends JDialog implements AlcConstants {
         DecimalFormat format = (DecimalFormat)numberFormat;
         format.applyPattern("#############");
         JFormattedTextField field = new JFormattedTextField(format);
-        field.setValue(new Integer(value));
+        field.setValue(value);
         field.setFont(font);
 //        field.setColumns(7);
 
@@ -191,25 +191,25 @@ class AlcExportDialog extends JDialog implements AlcConstants {
             public void keyReleased(KeyEvent evt) {
 
                 try {
-                    float width = new Float(widthField.getText());
-                    float height = new Float(heightField.getText());
-                    float percent = new Float(percentField.getText());
+                    float width = Float.valueOf(widthField.getText());
+                    float height = Float.valueOf(heightField.getText());
+                    float percent = Float.valueOf(percentField.getText());
 
                     JFormattedTextField source = (JFormattedTextField) evt.getSource();
 
                     if (source == widthField) {
                         float change = width / startWidth;
-                        heightField.setValue(new Integer(Math.round(startHeight * change)));
-                        percentField.setValue(new Integer(Math.round(change * 100f)));
+                        heightField.setValue(Math.round(startHeight * change));
+                        percentField.setValue(Math.round(change * 100f));
 
                     } else if (source == heightField) {
                         float change = height / startHeight;
-                        widthField.setValue(new Integer(Math.round(startWidth * change)));
-                        percentField.setValue(new Integer(Math.round(change * 100f)));
+                        widthField.setValue(Math.round(startWidth * change));
+                        percentField.setValue(Math.round(change * 100f));
 
                     } else if (source == percentField) {
-                        widthField.setValue(new Integer(Math.round(startWidth * (percent / 100f))));
-                        heightField.setValue(new Integer(Math.round(startHeight * (percent / 100f))));
+                        widthField.setValue(Math.round(startWidth * (percent / 100f)));
+                        heightField.setValue(Math.round(startHeight * (percent / 100f)));
                     }
                 } catch (NumberFormatException ex) {
                     System.err.println("Number Format Exception");

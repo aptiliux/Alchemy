@@ -126,9 +126,9 @@ class AlcPlugins implements AlcConstants {
 
         boolean coreExists = false;
         // Check the core plugin exists
-        for (int i = 0; i < plugins.length; i++) {
+        for (File plugin : plugins) {
             // If the core plugin exits
-            if (plugins[i].getName().indexOf("org.alchemy.core") != -1) {
+            if (plugin.getName().indexOf("org.alchemy.core") != -1) {
                 coreExists = true;
                 //System.out.println("Core Exists: " + i);
                 break;
@@ -200,12 +200,12 @@ class AlcPlugins implements AlcConstants {
 
     void initialiseModules() {
         // Set the global access to root, canvas, and toolBar for each module
-        for (int i = 0; i < creates.length; i++) {
-            creates[i].setGlobals(Alchemy.canvas, Alchemy.toolBar, Alchemy.math, Alchemy.colorSelector, Alchemy.window, Alchemy.bundle);
+        for (AlcModule create : creates) {
+            create.setGlobals(Alchemy.canvas, Alchemy.toolBar, Alchemy.math, Alchemy.colorSelector, Alchemy.window, Alchemy.bundle);
         }
         if (getNumberOfAffectModules() > 0) {
-            for (int i = 0; i < affects.length; i++) {
-                affects[i].setGlobals(Alchemy.canvas, Alchemy.toolBar, Alchemy.math, Alchemy.colorSelector, Alchemy.window, Alchemy.bundle);
+            for (AlcModule affect : affects) {
+                affect.setGlobals(Alchemy.canvas, Alchemy.toolBar, Alchemy.math, Alchemy.colorSelector, Alchemy.window, Alchemy.bundle);
             }
         }
 
@@ -227,9 +227,7 @@ class AlcPlugins implements AlcConstants {
             //System.out.println("Core ID: " + core.getId());
             ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), pointName);
 
-            for (Iterator it = point.getConnectedExtensions().iterator(); it.hasNext();) {
-
-                Extension ext = (Extension) it.next();
+            for (Extension ext : point.getConnectedExtensions()) {
                 PluginDescriptor descr = ext.getDeclaringPluginDescriptor();
                 pluginManager.activatePlugin(descr.getId());
                 System.out.println(descr.getId());
@@ -242,8 +240,8 @@ class AlcPlugins implements AlcConstants {
                 Constructor constructor = pluginCls.getConstructor(new Class[]{Alchemy.class});
                 // Passing the parameters to the constructor
                 AlcModule currentPlugin = (AlcModule) constructor.newInstance(new Object[]{root});
-                 */
-
+                */
+                
                 AlcModule currentPlugin = (AlcModule) pluginCls.newInstance();
                 AlcModule currentPluginSorted = (AlcModule) pluginCls.newInstance();
 
@@ -251,9 +249,9 @@ class AlcPlugins implements AlcConstants {
                 String descriptionParam = ext.getParameter("description").valueAsString();
                 String iconParam = ext.getParameter("icon").valueAsString();
                 String nameParam = ext.getParameter("name").valueAsString();
-
-
-
+                
+                
+                
                 int sortIndex = -1;
                 // Assign a sort index to each matching plugin
                 for (int i = 0; i < order.length; i++) {
@@ -286,8 +284,8 @@ class AlcPlugins implements AlcConstants {
                 //plugins[index].setSortOrderIndex(sortIndex);
                 plugins[index].setIndex(index);
                 plugins[index].setClassLoader(classLoader);
-
-
+                
+                
                 pluginsSorted[index].setModuleType(moduleType);
                 pluginsSorted[index].setName(nameParam);
                 pluginsSorted[index].setIconName(iconParam);
@@ -394,10 +392,10 @@ class PluginComparator implements Comparator<Object> {
 
     public int compare(Object o1, Object o2) {
         AlcModule module1 = ((AlcModule) o1);
-        Integer int1 = new Integer(module1.getSortOrderIndex());
+        Integer int1 = module1.getSortOrderIndex();
 
         AlcModule module2 = ((AlcModule) o2);
-        Integer int2 = new Integer(module2.getSortOrderIndex());
+        Integer int2 = module2.getSortOrderIndex();
 
         return int1.compareTo(int2);
     }

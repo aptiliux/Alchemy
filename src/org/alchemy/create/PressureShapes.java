@@ -98,7 +98,7 @@ public class PressureShapes extends AlcModule {
     private float getPressure() {
         float pressure = 1;
         if (canvas.getPenType() != PEN_CURSOR) {
-            pressure = canvas.getPenPressure() * (float) pressureAmount;
+            pressure = canvas.getPenPressure() * pressureAmount;
         }
         return pressure;
     }

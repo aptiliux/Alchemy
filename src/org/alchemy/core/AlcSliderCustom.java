@@ -71,7 +71,7 @@ public class AlcSliderCustom extends JComponent implements MouseListener, MouseM
         this.min = min;
         this.max = max;
         this.scale = (max - min);
-        this.step = scale / (float) width;
+        this.step = scale / width;
         // Recalculate the true slider value
         moveSlider(displayValue);
         fireStateChanged();

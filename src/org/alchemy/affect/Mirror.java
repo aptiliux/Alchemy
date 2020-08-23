@@ -302,7 +302,7 @@ public class Mirror extends AlcModule implements AlcConstants {
     /** Make a spine reflected through the horizontal axis */
     private ArrayList<Point2D.Float> makeHorizontalReflectedSpine(ArrayList<Point2D.Float> spine) {
         // Create a new array of flipped points
-        ArrayList<Point2D.Float> hSpine = new ArrayList<Point2D.Float>(1000);
+        ArrayList<Point2D.Float> hSpine = new ArrayList<>(1000);
         for (int j = 0; j < spine.size(); j++) {
             Point2D.Float p = spine.get(j);
             // Flip it over
@@ -348,7 +348,7 @@ public class Mirror extends AlcModule implements AlcConstants {
     /** Make a spine reflected through the vertical axis */
     private ArrayList<Point2D.Float> makeVerticalReflectedSpine(ArrayList<Point2D.Float> spine) {
         // Create a new array of flipped points
-        ArrayList<Point2D.Float> vSpine = new ArrayList<Point2D.Float>(1000);
+        ArrayList<Point2D.Float> vSpine = new ArrayList<>(1000);
         for (int j = 0; j < spine.size(); j++) {
             Point2D.Float p = spine.get(j);
             // Flip it over

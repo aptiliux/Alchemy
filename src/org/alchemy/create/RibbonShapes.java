@@ -291,7 +291,7 @@ public class RibbonShapes extends AlcModule implements AlcConstants {
                 AlcShape shape = canvas.getCurrentCreateShape();
                 //GeneralPath path = shape.getPath();
                 GeneralPath path = new GeneralPath();
-                ArrayList<Point2D.Float> spine = new ArrayList<Point2D.Float>(particles.length - 4);
+                ArrayList<Point2D.Float> spine = new ArrayList<>(particles.length - 4);
 
 
 

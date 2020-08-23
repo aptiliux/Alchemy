@@ -155,8 +155,8 @@ public class PullShapes extends AlcModule implements AlcConstants {
     }
 
     private void setupFolderSelector() {
-        for (int i = 0; i < folderNames.length; i++) {
-            folderSelector.addItem(folderNames[i]);
+        for (String folderName : folderNames) {
+            folderSelector.addItem(folderName);
         }
     }
 
@@ -210,10 +210,10 @@ public class PullShapes extends AlcModule implements AlcConstants {
             // Equal to each folder plus the root folder
             shapeLists = new ArrayList[folders.length + 1];
             // Initialise the root shape list
-            ArrayList<AlcShape> rootShapes = new ArrayList<AlcShape>();
-            for (int i = 0; i < rootPdfs.length; i++) {
+            ArrayList<AlcShape> rootShapes = new ArrayList<>();
+            for (File rootPdf : rootPdfs) {
                 // Add the shapes from each pdf to the root shape list
-                rootShapes.addAll(AlcUtil.getPDFShapes(rootPdfs[i], true, 0));
+                rootShapes.addAll(AlcUtil.getPDFShapes(rootPdf, true, 0));
             }
             // Add the rootShapes to the main array
             shapeLists[0] = rootShapes;
@@ -235,20 +235,20 @@ public class PullShapes extends AlcModule implements AlcConstants {
             int folderNameCount = 1;
 
             // For every folder
-            for (int i = 0; i < folders.length; i++) {
+            for (File folder : folders) {
                 // Get every pdf in each folder
-                File[] pdfs = AlcUtil.listFilesAsArray(folders[i], pdfFilter, true);
-                ArrayList<AlcShape> folderShapes = new ArrayList<AlcShape>();
-                for (int j = 0; j < pdfs.length; j++) {
+                File[] pdfs = AlcUtil.listFilesAsArray(folder, pdfFilter, true);
+                ArrayList<AlcShape> folderShapes = new ArrayList<>();
+                for (File pdf : pdfs) {
                     // Add the shapes from each pdf to the folder shape list
-                    folderShapes.addAll(AlcUtil.getPDFShapes(pdfs[j], true, 0));
+                    folderShapes.addAll(AlcUtil.getPDFShapes(pdf, true, 0));
                 }
                 // Store this folder of shapes in the main array
                 shapeLists[count] = folderShapes;
                 count++;
                 //System.out.println(folders[i].getName() + " " + folderShapes.size());
                 // Store the folder name
-                folderNames[folderNameCount] = folders[i].getName() + " Folder";
+                folderNames[folderNameCount] = folder.getName() + " Folder";
                 folderNameCount++;
                 hasShapes = true;
             }

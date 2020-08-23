@@ -40,7 +40,7 @@ class AlcResourceBundleChecker extends JDialog {
     AlcResourceBundleChecker() {
 
         // Read properties file.
-        LinkedHashMap<String, String> rootBundle = new LinkedHashMap<String, String>();
+        LinkedHashMap<String, String> rootBundle = new LinkedHashMap<>();
         try {
             URI bundleURI = Alchemy.class.getResource("/org/alchemy/core/AlcResourceBundle.properties").toURI();
             rootBundle = load(new FileInputStream(new File(bundleURI)));
@@ -66,10 +66,8 @@ class AlcResourceBundleChecker extends JDialog {
                 }
             });
 
-            for (int i = 0; i < bundleFiles.length; i++) {
-                File file = bundleFiles[i];
+            for (File file : bundleFiles) {
                 System.out.println(file.getAbsolutePath());
-
             }
 
             System.out.println("Total Files: " + bundleFiles.length);
@@ -85,14 +83,11 @@ class AlcResourceBundleChecker extends JDialog {
 
         if (bundleFiles != null && bundleFiles.length > 0) {
 
-            for (int i = 0; i < bundleFiles.length; i++) {
-
+            for (File bundleFile : bundleFiles) {
                 try {
-                    LinkedHashMap<String, String> bundle = new LinkedHashMap<String, String>();
-                    bundle = load(new FileInputStream(bundleFiles[i]));
-
-                    text += bundleFiles[i].getName() + "\n\n";
-
+                    LinkedHashMap<String, String> bundle = new LinkedHashMap<>();
+                    bundle = load(new FileInputStream(bundleFile));
+                    text += bundleFile.getName() + "\n\n";
                     for (String key : keySet) {
 
                         if (!bundle.containsKey(key) && !key.startsWith("copyright") && !key.startsWith("version")) {
@@ -100,9 +95,7 @@ class AlcResourceBundleChecker extends JDialog {
                         }
                     }
                     text += "\n---------------\n\n";
-
-
-                } catch (Exception ex) {
+                }catch (Exception ex) {
                     System.err.println("Error loading bundle");
                     ex.printStackTrace();
 
@@ -134,7 +127,7 @@ class AlcResourceBundleChecker extends JDialog {
      * http://dev.processing.org/source/index.cgi/trunk/processing/app/src/processing/app/Preferences.java?view=markup
      */
     static protected LinkedHashMap<String, String> load(InputStream input) throws IOException {
-        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
         String[] lines = loadStrings(input);  // Reads as UTF-8
         for (String line : lines) {
             if ((line.length() == 0) ||

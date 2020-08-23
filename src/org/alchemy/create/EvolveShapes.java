@@ -389,7 +389,7 @@ public class EvolveShapes extends AlcModule {
             }
         });
 
-        ArrayList<AlcShape> crossBreedShapes = new ArrayList<AlcShape>(shapes.length);
+        ArrayList<AlcShape> crossBreedShapes = new ArrayList<>(shapes.length);
         int rankingCount = 0;
 
         for (int i = 0; i < shapes.length - 1; i++) {
@@ -415,8 +415,8 @@ public class EvolveShapes extends AlcModule {
         // If no shapes have been ranked
         // Generate random mutations
         if (rankingCount == 0) {
-            for (int i = 0; i < shapes.length; i++) {
-                AlcShape mutant = mutateShape(shapes[i]);
+            for (AlcShape shape : shapes) {
+                AlcShape mutant = mutateShape(shape);
                 crossBreedShapes.add(mutant);
             }
 

@@ -158,17 +158,17 @@ public class AlcMicrophone {
         if (audioFormat.isBigEndian()) {
             for (int i = 0; i < audioSamples.length; i++) {
                 /* First byte is MSB (high order) */
-                int MSB = (int) audioBytes[2 * i];
+                int MSB = audioBytes[2 * i];
                 /* Second byte is LSB (low order) */
-                int LSB = (int) audioBytes[2 * i + 1];
+                int LSB = audioBytes[2 * i + 1];
                 audioSamples[i] = MSB << 8 | (255 & LSB);
             }
         } else {
             for (int i = 0; i < audioSamples.length; i++) {
                 /* First byte is LSB (low order) */
-                int LSB = (int) audioBytes[2 * i];
+                int LSB = audioBytes[2 * i];
                 /* Second byte is MSB (high order) */
-                int MSB = (int) audioBytes[2 * i + 1];
+                int MSB = audioBytes[2 * i + 1];
                 audioSamples[i] = MSB << 8 | (255 & LSB);
             }
         }
@@ -184,7 +184,7 @@ public class AlcMicrophone {
         for (int i = 0; i < audioSamples.length; i++) {
             sum += Math.abs(audioSamples[i]);
         }
-        double average = (sum / (double) audioSamples.length) / 100;
+        double average = (sum / audioSamples.length) / 100;
         return average;
     }
 
@@ -208,19 +208,15 @@ public class AlcMicrophone {
         Mixer.Info[] mi = AudioSystem.getMixerInfo();
         // Top layer to break out to when we find the correct format
         search:
-        for (int i = 0; i < mi.length; i++) {
+        for (Mixer.Info mi1 : mi) {
             //System.out.println(mi[i]);
-            Mixer m = AudioSystem.getMixer(mi[i]);
-
+            Mixer m = AudioSystem.getMixer(mi1);
             Line.Info[] tli = m.getTargetLineInfo();
-
-            for (int j = 0; j < tli.length; j++) {
+            for (Line.Info tli1 : tli) {
                 //System.out.println("target: " + tli[j]);
-
                 try {
-                    AudioFormat[] formats = ((DataLine.Info) tli[j]).getFormats();
-                    for (int k = 0; k < formats.length; k++) {
-                        AudioFormat thisFormat = formats[k];
+                    AudioFormat[] formats = ((DataLine.Info) tli1).getFormats();
+                    for (AudioFormat thisFormat : formats) {
                         //System.out.println("    " + thisFormat);
                         // Get the first mono / 2frame / 16 bit format from the list
                         if (thisFormat.getChannels() == 1 &&
@@ -232,11 +228,11 @@ public class AlcMicrophone {
                             break search;
                         }
                     }
-                } catch (ClassCastException e) {
-                //e.printStackTrace();
+                }catch (ClassCastException e) {
+                    //e.printStackTrace();
                 }
             }
-        //System.out.println();
+            //System.out.println();
         }
 
         if (audioFormat.getSampleRate() == AudioSystem.NOT_SPECIFIED) {

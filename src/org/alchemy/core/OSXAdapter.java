@@ -81,7 +81,7 @@ class OSXAdapter implements InvocationHandler {
         // com.apple.eawt.Application reflectively
         try {
             Method enableAboutMethod = macOSXApplication.getClass().getDeclaredMethod("setEnabledAboutMenu", new Class[]{boolean.class});
-            enableAboutMethod.invoke(macOSXApplication, new Object[]{Boolean.valueOf(enableAboutMenu)});
+            enableAboutMethod.invoke(macOSXApplication, new Object[]{enableAboutMenu});
         } catch (Exception ex) {
             System.err.println("OSXAdapter could not access the About Menu");
             ex.printStackTrace();
@@ -98,7 +98,7 @@ class OSXAdapter implements InvocationHandler {
         // com.apple.eawt.Application reflectively
         try {
             Method enablePrefsMethod = macOSXApplication.getClass().getDeclaredMethod("setEnabledPreferencesMenu", new Class[]{boolean.class});
-            enablePrefsMethod.invoke(macOSXApplication, new Object[]{Boolean.valueOf(enablePrefsMenu)});
+            enablePrefsMethod.invoke(macOSXApplication, new Object[]{enablePrefsMenu});
         } catch (Exception ex) {
             System.err.println("OSXAdapter could not access the About Menu");
             ex.printStackTrace();
@@ -160,7 +160,7 @@ class OSXAdapter implements InvocationHandler {
         if (result == null) {
             return true;
         }
-        return Boolean.valueOf(result.toString()).booleanValue();
+        return Boolean.valueOf(result.toString());
     }
     // InvocationHandler implementation
     // This is the entry point for our proxy object; it is called every time an ApplicationListener method is invoked
@@ -184,7 +184,7 @@ class OSXAdapter implements InvocationHandler {
             try {
                 Method setHandledMethod = event.getClass().getDeclaredMethod("setHandled", new Class[]{boolean.class});
                 // If the target method returns a boolean, use that as a hint
-                setHandledMethod.invoke(event, new Object[]{Boolean.valueOf(handled)});
+                setHandledMethod.invoke(event, new Object[]{handled});
             } catch (Exception ex) {
                 System.err.println("OSXAdapter was unable to handle an ApplicationEvent: " + event);
                 ex.printStackTrace();

@@ -105,7 +105,7 @@ class AlcNumberDialog extends JDialog implements AlcConstants {
                     public void actionPerformed(ActionEvent e) {
                         Integer newMin = (Integer) minModel.getValue();
                         Integer newMax = (Integer) maxModel.getValue();
-                        parent.setup(newMin.intValue(), newMax.intValue());
+                        parent.setup(newMin, newMax);
                         setVisible(false);
                     }
                 });
